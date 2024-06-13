@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 # Creating VPC
@@ -29,11 +29,11 @@ resource "aws_internet_gateway" "proig" {
   }
 }
 
-# Creating Subnet in Availability Zone us-east-1a
+# Creating Subnet in Availability Zone ap-south-1a
 resource "aws_subnet" "aval_1a_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.1.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
   tags = {
     Name = "aval_1a_subnet"
   }
@@ -58,11 +58,11 @@ resource "aws_route_table_association" "public_attach_1a" {
   route_table_id = aws_route_table.aval_1a_rt.id
 }
 
-# Creating Subnet in Availability Zone us-east-1b
+# Creating Subnet in Availability Zone ap-south-1b
 resource "aws_subnet" "aval_1b_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.2.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "ap-south-1b"
   tags = {
     Name = "aval_1b_subnet"
   }  
@@ -87,11 +87,11 @@ resource "aws_route_table_association" "public_attach_1b" {
   route_table_id = aws_route_table.aval_1b_rt.id
 }
 
-# Creating Subnet in Availability Zone us-east-1c
+# Creating Subnet in Availability Zone ap-south-1c
 resource "aws_subnet" "aval_1c_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.3.0/24"
-  availability_zone = "us-east-1c"
+  availability_zone = "ap-south-1c"
   tags = {
     Name = "aval_1c_subnet"
   }  
@@ -148,7 +148,7 @@ resource "aws_security_group" "prosg" {
   }
 }
 
-# Creating Java Instance in Availability Zone us-east-1a
+# Creating Java Instance in Availability Zone ap-south-1a
 resource "aws_instance" "java_First_Instance" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
@@ -162,7 +162,7 @@ resource "aws_instance" "java_First_Instance" {
               sudo apt-get update
               sudo apt-get install -y openjdk-11-jdk
               EOF
-  key_name = "jenkinskey"  # Ensure this matches your existing key pair
+  key_name = "vv"  # Ensure this matches your existing key pair
   associate_public_ip_address = true
 }
 
