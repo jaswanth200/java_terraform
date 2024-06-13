@@ -13,6 +13,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# Creating VPC
 resource "aws_vpc" "provpc" {
   cidr_block = "10.10.0.0/16"
   tags = {   
@@ -20,6 +21,7 @@ resource "aws_vpc" "provpc" {
   }
 }
 
+# Creating Internet Gateway
 resource "aws_internet_gateway" "proig" {
   vpc_id = aws_vpc.provpc.id
   tags = {
@@ -27,6 +29,7 @@ resource "aws_internet_gateway" "proig" {
   }
 }
 
+# Creating Subnet in Availability Zone us-east-1a
 resource "aws_subnet" "aval_1a_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.1.0/24"
@@ -36,6 +39,7 @@ resource "aws_subnet" "aval_1a_subnet" {
   }
 }
 
+# Creating Route Table for Availability Zone 1a
 resource "aws_route_table" "aval_1a_rt" {
   vpc_id = aws_vpc.provpc.id
 
@@ -48,11 +52,13 @@ resource "aws_route_table" "aval_1a_rt" {
   }
 }
 
+# Attaching Public Route Table to Availability Zone 1a Subnet 
 resource "aws_route_table_association" "public_attach_1a" {
   subnet_id      = aws_subnet.aval_1a_subnet.id
   route_table_id = aws_route_table.aval_1a_rt.id
 }
 
+# Creating Subnet in Availability Zone us-east-1b
 resource "aws_subnet" "aval_1b_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.2.0/24"
@@ -62,6 +68,7 @@ resource "aws_subnet" "aval_1b_subnet" {
   }  
 }
 
+# Creating Route Table for Availability Zone 1b
 resource "aws_route_table" "aval_1b_rt" {
   vpc_id = aws_vpc.provpc.id
 
@@ -74,11 +81,13 @@ resource "aws_route_table" "aval_1b_rt" {
   }
 }
 
+# Attaching Public Route Table to Availability Zone 1b Subnet 
 resource "aws_route_table_association" "public_attach_1b" {
   subnet_id      = aws_subnet.aval_1b_subnet.id
   route_table_id = aws_route_table.aval_1b_rt.id
 }
 
+# Creating Subnet in Availability Zone us-east-1c
 resource "aws_subnet" "aval_1c_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.3.0/24"
@@ -88,6 +97,7 @@ resource "aws_subnet" "aval_1c_subnet" {
   }  
 }
 
+# Creating Route Table for Availability Zone 1c
 resource "aws_route_table" "aval_1c_rt" {
   vpc_id = aws_vpc.provpc.id
 
@@ -100,11 +110,13 @@ resource "aws_route_table" "aval_1c_rt" {
   }
 }
 
+# Attaching Public Route Table to Availability Zone 1c Subnet 
 resource "aws_route_table_association" "public_attach_1c" {
   subnet_id      = aws_subnet.aval_1c_subnet.id
   route_table_id = aws_route_table.aval_1c_rt.id
 }
 
+# Creating Security Group for Instances
 resource "aws_security_group" "prosg" {
   name        = "prosg"
   vpc_id      = aws_vpc.provpc.id
@@ -119,7 +131,7 @@ resource "aws_security_group" "prosg" {
   }
 
   ingress {
-    description = "http from all internet"
+    description = "ssh from all internet"
     from_port   = 22
     to_port     = 22
     protocol    = "TCP"
@@ -136,29 +148,30 @@ resource "aws_security_group" "prosg" {
   }
 }
 
-resource "aws_instance" "python_First_Instance" {
-  ami                    = "ami-04b70fa74e45c3917"
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.aval_1a_subnet.id
-  security_groups        = [aws_security_group.prosg.id]
-  tags                   = {
-    Name = "pythonFirstInstance"
+# Creating Java Instance in Availability Zone us-east-1a
+resource "aws_instance" "java_First_Instance" {
+  ami           = "ami-04b70fa74e45c3917"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.aval_1a_subnet.id
+  security_groups = [aws_security_group.prosg.name]  # Use security group name instead of id
+  tags = {
+    Name = "javaFirstInstance"
   }
-  user_data              = <<-EOF
-                            #!/bin/bash
-                            sudo apt-get update
-                            sudo apt-get install -y python3
-                            sudo apt-get install -y python3-pip
-                            EOF
-  key_name               = "jenkinskey"  # Ensure this matches the created key pair
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo apt-get update
+              sudo apt-get install -y openjdk-11-jdk
+              EOF
+  key_name = "jenkinskey"  # Ensure this matches your existing key pair
   associate_public_ip_address = true
 }
 
-resource "aws_ami_from_instance" "python_First_Instance_ami" {
-  name               = "python_First_Instance-ami"
-  source_instance_id = aws_instance.python_First_Instance.id
-  depends_on         = [aws_instance.python_First_Instance]
+# Creating AMI from Java Instance
+resource "aws_ami_from_instance" "java_First_Instance_ami" {
+  name               = "java_First_Instance-ami"
+  source_instance_id = aws_instance.java_First_Instance.id
+  depends_on         = [aws_instance.java_First_Instance]
   tags = {
-    Name = "python_FirstInstanceAMI"
+    Name = "java_FirstInstanceAMI"
   }
 }
