@@ -127,7 +127,7 @@ resource "aws_instance" "java_First_Instance" {
   subnet_id                   = aws_subnet.aval_1a_subnet.id
   vpc_security_group_ids      = [aws_security_group.prosg.id]
   associate_public_ip_address = true
-  key_name                    = "new-keypair"  # Ensure this key pair exists
+  key_name                    = "vv"  # Ensure this key pair exists
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
