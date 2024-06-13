@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                dir('fold1') {
+                dir('file1') {
                     script {
                         sh 'terraform init'
                     }
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('fold1') {
+                dir('file1') {
                     script {
                         sh 'terraform apply -auto-approve'
                     }
