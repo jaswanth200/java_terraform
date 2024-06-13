@@ -150,7 +150,7 @@ resource "aws_security_group" "prosg" {
 
 # Creating Java Instance in Availability Zone ap-south-1a
 resource "aws_instance" "java_First_Instance" {
-  ami           = "ami-04b70fa74e45c3917"
+  ami           = "ami-0f58b397bc5c1f2e8"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.aval_1a_subnet.id
   security_groups = [aws_security_group.prosg.name]  # Use security group name instead of id
