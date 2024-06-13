@@ -122,12 +122,12 @@ resource "aws_security_group" "prosg" {
 
 # Creating Java Instance in Availability Zone ap-south-1a
 resource "aws_instance" "java_First_Instance" {
-  ami                         = "ami-0f58b397bc5c1f2e8"  # Verify this AMI ID
+  ami                         = "ami-0f58b397bc5c1f2e8"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.aval_1a_subnet.id
   vpc_security_group_ids      = [aws_security_group.prosg.id]
   associate_public_ip_address = true
-  key_name                    = "hhkey"  # Ensure this key pair exists
+  key_name                    = "hhkey"
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
