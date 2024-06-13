@@ -18,13 +18,15 @@ output "aval_1c_subnet" {
   value = aws_subnet.aval_1c_subnet.id
 }
 
-output "first_instance_ami" {
-  value = aws_ami_from_instance.first_instance_ami.id
+# Outputs
+output "java_first_instance_ami" {
+  value = aws_ami_from_instance.java_First_Instance_ami.id
 }
 
-output "first_instance_ip" {
-  value = aws_instance.first_instance.public_ip
+output "java_first_instance_ip" {
+  value = aws_instance.java_First_Instance.public_ip
 }
+
 
 output "prosg" {
   value = aws_security_group.prosg.id
