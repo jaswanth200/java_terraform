@@ -10,7 +10,8 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-south-1"
+  region  = "ap-south-1"
+  version = "~> 5.46.0"
 }
 
 # Creating VPC
