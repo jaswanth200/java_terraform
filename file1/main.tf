@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.53.0"
+      version = "~> 5.46.0"
     }
   }
 }
@@ -140,7 +140,7 @@ resource "aws_instance" "java_First_Instance" {
 
 # Creating AMI from Java Instance with a unique name using timestamp
 resource "aws_ami_from_instance" "java_First_Instance_ami" {
-  name               = "java_First_Instance-ami-${timestamp()}"
+  name               = "java_First_Instance-ami"
   source_instance_id = aws_instance.java_First_Instance.id
   depends_on         = [aws_instance.java_First_Instance]
   tags = {
