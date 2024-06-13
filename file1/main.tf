@@ -163,7 +163,7 @@ resource "aws_instance" "java_First_Instance" {
               sudo apt-get update
               sudo apt-get install -y openjdk-11-jdk
               EOF
-  key_name = "vv.pem"  # Ensure this matches your existing key pair
+  key_name = "vv"  # Ensure this matches your existing key pair
   associate_public_ip_address = true
 }
 
