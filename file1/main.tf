@@ -10,14 +10,13 @@ terraform {
 }
 
 provider "aws" {
-  region  = "ap-south-1"
-  version = "5.53.0"
+  region = "ap-south-1"
 }
 
 # Creating VPC
 resource "aws_vpc" "provpc" {
   cidr_block = "10.10.0.0/16"
-  tags = {   
+  tags = {
     Name = "provpc"
   }
 }
@@ -32,99 +31,72 @@ resource "aws_internet_gateway" "proig" {
 
 # Creating Subnet in Availability Zone ap-south-1a
 resource "aws_subnet" "aval_1a_subnet" {
-  vpc_id     = aws_vpc.provpc.id
-  cidr_block = "10.10.1.0/24"
+  vpc_id            = aws_vpc.provpc.id
+  cidr_block        = "10.10.1.0/24"
   availability_zone = "ap-south-1a"
   tags = {
     Name = "aval_1a_subnet"
   }
 }
 
-# Creating Route Table for Availability Zone 1a
-resource "aws_route_table" "aval_1a_rt" {
-  vpc_id = aws_vpc.provpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.proig.id
-  }
-  tags = {
-    Name = "aval_1a_rt"
-  }
-}
-
-# Attaching Public Route Table to Availability Zone 1a Subnet 
-resource "aws_route_table_association" "public_attach_1a" {
-  subnet_id      = aws_subnet.aval_1a_subnet.id
-  route_table_id = aws_route_table.aval_1a_rt.id
-}
-
 # Creating Subnet in Availability Zone ap-south-1b
 resource "aws_subnet" "aval_1b_subnet" {
-  vpc_id     = aws_vpc.provpc.id
-  cidr_block = "10.10.2.0/24"
+  vpc_id            = aws_vpc.provpc.id
+  cidr_block        = "10.10.2.0/24"
   availability_zone = "ap-south-1b"
   tags = {
     Name = "aval_1b_subnet"
-  }  
-}
-
-# Creating Route Table for Availability Zone 1b
-resource "aws_route_table" "aval_1b_rt" {
-  vpc_id = aws_vpc.provpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.proig.id
   }
-  tags = {
-    Name = "aval_1b_rt"
-  }
-}
-
-# Attaching Public Route Table to Availability Zone 1b Subnet 
-resource "aws_route_table_association" "public_attach_1b" {
-  subnet_id      = aws_subnet.aval_1b_subnet.id
-  route_table_id = aws_route_table.aval_1b_rt.id
 }
 
 # Creating Subnet in Availability Zone ap-south-1c
 resource "aws_subnet" "aval_1c_subnet" {
-  vpc_id     = aws_vpc.provpc.id
-  cidr_block = "10.10.3.0/24"
+  vpc_id            = aws_vpc.provpc.id
+  cidr_block        = "10.10.3.0/24"
   availability_zone = "ap-south-1c"
   tags = {
     Name = "aval_1c_subnet"
-  }  
+  }
 }
 
-# Creating Route Table for Availability Zone 1c
-resource "aws_route_table" "aval_1c_rt" {
+# Creating Route Table
+resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.provpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.proig.id
   }
+
   tags = {
-    Name = "aval_1c_rt"
+    Name = "public_rt"
   }
 }
 
-# Attaching Public Route Table to Availability Zone 1c Subnet 
+# Attaching Route Table to Subnets
+resource "aws_route_table_association" "public_attach_1a" {
+  subnet_id      = aws_subnet.aval_1a_subnet.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "public_attach_1b" {
+  subnet_id      = aws_subnet.aval_1b_subnet.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
 resource "aws_route_table_association" "public_attach_1c" {
   subnet_id      = aws_subnet.aval_1c_subnet.id
-  route_table_id = aws_route_table.aval_1c_rt.id
+  route_table_id = aws_route_table.public_rt.id
 }
 
 # Creating Security Group for Instances
 resource "aws_security_group" "prosg" {
   name        = "prosg"
   vpc_id      = aws_vpc.provpc.id
-  description = "security_group"
+  description = "Security Group for public instances"
 
   ingress {
-    description = "http from all internet"
+    description = "Allow HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "TCP"
@@ -132,7 +104,7 @@ resource "aws_security_group" "prosg" {
   }
 
   ingress {
-    description = "ssh from all internet"
+    description = "Allow SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "TCP"
@@ -140,31 +112,30 @@ resource "aws_security_group" "prosg" {
   }
 
   egress {
-    description      = "http to all internet"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"] 
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 # Creating Java Instance in Availability Zone ap-south-1a
 resource "aws_instance" "java_First_Instance" {
-  ami           = "ami-0e1d06225679bc1c5"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.aval_1a_subnet.id
-  vpc_security_group_ids = [aws_security_group.prosg.id]
-  tags = {
-    Name = "javaFirstInstance"
-  }
+  ami                         = "ami-0e1d06225679bc1c5"  # Verify this AMI ID
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.aval_1a_subnet.id
+  vpc_security_group_ids      = [aws_security_group.prosg.id]
+  associate_public_ip_address = true
+  key_name                    = "new-keypair"  # Ensure this key pair exists
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
               sudo apt-get install -y openjdk-11-jdk
               EOF
-  key_name   = "new-keypair"
-  associate_public_ip_address = true
+  tags = {
+    Name = "javaFirstInstance"
+  }
 }
 
 # Creating AMI from Java Instance
@@ -176,4 +147,3 @@ resource "aws_ami_from_instance" "java_First_Instance_ami" {
     Name = "java_FirstInstanceAMI"
   }
 }
-
