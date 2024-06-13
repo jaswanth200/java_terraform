@@ -110,7 +110,7 @@ resource "aws_launch_configuration" "pro_aws_asg_config" {
   name                      = "Pro_AWS_Asg_Config"
   image_id                  = data.terraform_remote_state.networking.outputs.first_instance_ami
   instance_type             = "t2.micro"
-  key_name                  = "vv"
+  key_name                  = "jenkinkskey"
   security_groups           = [data.terraform_remote_state.networking.outputs.prosg]
   associate_public_ip_address = true
 }
