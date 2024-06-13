@@ -4,14 +4,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.46.0"
+      version = "5.53.0"
     }
   }
 }
 
 provider "aws" {
   region  = "ap-south-1"
-  version = "~> 5.46.0"
+  version = "5.53.0"
 }
 
 # Creating VPC
