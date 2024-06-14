@@ -130,7 +130,7 @@ resource "aws_instance" "java_First_Instance" {
 }
 
 resource "aws_ami_from_instance" "java_First_Instance_ami" {
-  name               = "java_First_Instance-ami-${timestamp()}"
+  name               = "java_First_Instance-ami-${formatdate("YYYYMMDD-HHmmss", timestamp())}"
   source_instance_id = aws_instance.java_First_Instance.id
   tags = {
     Name = "java_FirstInstanceAMI"
