@@ -13,7 +13,6 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-# Creating VPC
 resource "aws_vpc" "provpc" {
   cidr_block = "10.10.0.0/16"
   tags = {
@@ -21,7 +20,6 @@ resource "aws_vpc" "provpc" {
   }
 }
 
-# Creating Internet Gateway
 resource "aws_internet_gateway" "proig" {
   vpc_id = aws_vpc.provpc.id
   tags = {
@@ -29,7 +27,6 @@ resource "aws_internet_gateway" "proig" {
   }
 }
 
-# Creating Subnet in Availability Zone ap-south-1a
 resource "aws_subnet" "aval_1a_subnet" {
   vpc_id            = aws_vpc.provpc.id
   cidr_block        = "10.10.1.0/24"
@@ -39,7 +36,6 @@ resource "aws_subnet" "aval_1a_subnet" {
   }
 }
 
-# Creating Subnet in Availability Zone ap-south-1b
 resource "aws_subnet" "aval_1b_subnet" {
   vpc_id            = aws_vpc.provpc.id
   cidr_block        = "10.10.2.0/24"
@@ -49,7 +45,6 @@ resource "aws_subnet" "aval_1b_subnet" {
   }
 }
 
-# Creating Subnet in Availability Zone ap-south-1c
 resource "aws_subnet" "aval_1c_subnet" {
   vpc_id            = aws_vpc.provpc.id
   cidr_block        = "10.10.3.0/24"
@@ -59,7 +54,6 @@ resource "aws_subnet" "aval_1c_subnet" {
   }
 }
 
-# Creating Route Table
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.provpc.id
 
@@ -73,7 +67,6 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# Attaching Route Table to Subnets
 resource "aws_route_table_association" "public_attach_1a" {
   subnet_id      = aws_subnet.aval_1a_subnet.id
   route_table_id = aws_route_table.public_rt.id
@@ -89,7 +82,6 @@ resource "aws_route_table_association" "public_attach_1c" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-# Creating Security Group for Instances
 resource "aws_security_group" "prosg" {
   name        = "prosg"
   vpc_id      = aws_vpc.provpc.id
@@ -120,7 +112,6 @@ resource "aws_security_group" "prosg" {
   }
 }
 
-# Creating Java Instance in Availability Zone ap-south-1a
 resource "aws_instance" "java_First_Instance" {
   ami                         = "ami-0f58b397bc5c1f2e8"
   instance_type               = "t2.micro"
@@ -145,4 +136,3 @@ resource "aws_ami_from_instance" "java_First_Instance_ami" {
     Name = "java_FirstInstanceAMI"
   }
 }
-
