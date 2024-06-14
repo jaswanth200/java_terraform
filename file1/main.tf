@@ -138,15 +138,11 @@ resource "aws_instance" "java_First_Instance" {
   }
 }
 
-# Creating AMI from Java Instance with a unique name using timestamp
-resource "aws_ami" "java_First_Instance_ami" {
+resource "aws_ami_from_instance" "java_First_Instance_ami" {
   name               = "java_First_Instance-ami-${timestamp()}"
   source_instance_id = aws_instance.java_First_Instance.id
-  depends_on         = [aws_instance.java_First_Instance]
   tags = {
     Name = "java_FirstInstanceAMI"
   }
-  timeouts {
-    create = "60m"
-  }
 }
+
