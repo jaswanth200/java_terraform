@@ -18,7 +18,6 @@ output "aval_1c_subnet" {
   value = aws_subnet.aval_1c_subnet.id
 }
 
-# Outputs
 output "java_first_instance_ami" {
   value = aws_ami_from_instance.java_First_Instance_ami.id
 }
