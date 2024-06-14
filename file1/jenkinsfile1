@@ -6,7 +6,7 @@ pipeline {
             steps {
                 dir('file1') {
                     script {
-                        sh 'terraform init'
+                        sh 'terraform init -upgrade'
                     }
                 }
             }
