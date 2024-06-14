@@ -99,7 +99,7 @@ resource "aws_security_group" "prosg" {
     description = "Allow HTTP"
     from_port   = 80
     to_port     = 80
-    protocol    = "TCP"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -107,7 +107,7 @@ resource "aws_security_group" "prosg" {
     description = "Allow SSH"
     from_port   = 22
     to_port     = 22
-    protocol    = "TCP"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -139,11 +139,14 @@ resource "aws_instance" "java_First_Instance" {
 }
 
 # Creating AMI from Java Instance with a unique name using timestamp
-resource "aws_ami_from_instance" "java_First_Instance_ami" {
-  name               = "java_First_Instance-ami"
+resource "aws_ami" "java_First_Instance_ami" {
+  name               = "java_First_Instance-ami-${timestamp()}"
   source_instance_id = aws_instance.java_First_Instance.id
   depends_on         = [aws_instance.java_First_Instance]
   tags = {
     Name = "java_FirstInstanceAMI"
+  }
+  timeouts {
+    create = "60m"
   }
 }
