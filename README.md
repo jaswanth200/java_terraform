@@ -10,11 +10,21 @@ Before you begin, ensure you have the following installed/configured:
 - AWS CLI configured with appropriate credentials and default region set to `ap-south-1`
 - (Optional) Key pair (`hhkey`) for SSH access to the EC2 instance
 
-## Getting Started
+## Configuration Details
 
-1. Clone this repository:
+### Terraform Version
 
-   ```
-   git clone <repository-url>
-   cd <repository-name>
-   ```
+This configuration specifies Terraform version and required provider version constraints:
+
+```hcl
+terraform {
+  required_version = ">= 1.0.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.46.0"
+    }
+  }
+}
+```
