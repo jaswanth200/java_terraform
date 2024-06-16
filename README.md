@@ -29,7 +29,7 @@ terraform {
 }
 ```
 ### AWS Provider
-The AWS provider is configured with the region ## ap-south-1:
+The AWS provider is configured with the region <b>ap-south-1</b>:
 ```
 provider "aws" {
   region = "ap-south-1"
