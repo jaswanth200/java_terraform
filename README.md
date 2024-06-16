@@ -45,7 +45,7 @@ provider "aws" {
 **Subnets**
 Three subnets created across different availability zones (ap-south-1a, ap-south-1b, ap-south-1c):
 
-1. *** Subnet 1 (aws_subnet.aval_1a_subnet): ***
+1.Subnet 1 (aws_subnet.aval_1a_subnet):
 
 CIDR Block: 10.10.1.0/24
 Availability Zone: ap-south-1a
