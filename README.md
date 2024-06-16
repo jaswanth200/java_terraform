@@ -129,3 +129,77 @@ We welcome contributions to improve this pipeline. Please follow these steps:
 3. **Make Changes**: Implement your changes.
 4. **Submit a Pull Request**: Create a pull request to merge your changes into the main repository.
 
+# Jenkins Pipeline for Deploying Java Application
+
+This Jenkins pipeline script automates the deployment of a Java application to a remote VM. It performs the following steps:
+
+1. **Getting tar file from Nexus**: Downloads a tar file from Nexus repository using SSH and curl.
+2. **Unarchive the tar file**: Unarchives the downloaded tar file on the remote VM and installs OpenJDK 11.
+3. **Run the Java Application**: Executes the Java application with specified arguments on the remote VM.
+
+## Prerequisites
+
+Before running this Jenkins pipeline, ensure:
+
+- Jenkins is set up and configured with necessary plugins (e.g., SSH, Git).
+- Nexus repository URL (`nexus_ip_address:8081/repository/maven-repo`) is accessible.
+- Remote VM (`remote_vm_ip_address`) is configured to allow SSH connections and has Java dependencies resolved.
+
+## Pipeline Structure
+
+The pipeline is structured into three stages:
+
+### 1. Getting tar file from Nexus
+
+Downloads the tar file from Nexus repository using SSH and curl.
+
+### 2. Unarchive the tar file
+
+Unarchives the tar file on the remote VM and installs OpenJDK 11.
+
+### 3. Run the Java Application
+
+Executes the Java application with specified arguments on the remote VM.
+
+## Pipeline Script
+
+```groovy
+pipeline {
+    agent any
+    
+    stages {
+        stage('Getting tar file from Nexus') {
+            steps {
+                script {
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'curl -u jashu:12345 -O -L http://nexus_ip_address:8081/repository/maven-repo/javatar.${img_tag}.tar'
+                    """
+                }
+            }
+        }
+        
+        stage('Unarchive the tar file') {
+            steps {
+                script {
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'tar -xvf javatar.img_tag.tar && cd demo-backend1/target'
+                    """
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'sudo apt update && sudo apt install -y openjdk-11-jdk'
+                    """
+                }
+            }
+        }
+        
+        stage('Run the Java Application') {
+            steps {
+                script {
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'cd demo-backend1/target && java -jar /home/ubuntu/demo-backend1/target/sentiment-analysis-web-0.0.2-SNAPSHOT.jar --sa.logic.api.url=http://localhost:5000'
+                    """
+                }
+            }
+        }
+    }
+}
+
