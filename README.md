@@ -14,7 +14,6 @@ Before you begin, ensure you have the following:
 
 This configuration specifies Terraform version and required provider version constraints:
 
-```
 terraform {
   required_version = ">= 1.0.0"
 
@@ -25,12 +24,10 @@ terraform {
     }
   }
 }
-###AWS Provider
 The AWS provider is configured with the region ap-south-1:
 provider "aws" {
   region = "ap-south-1"
 }
-'''
 
 **Resources Created**
 VPC (aws_vpc.provpc)
