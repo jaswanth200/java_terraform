@@ -129,7 +129,3 @@ We welcome contributions to improve this pipeline. Please follow these steps:
 3. **Make Changes**: Implement your changes.
 4. **Submit a Pull Request**: Create a pull request to merge your changes into the main repository.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
