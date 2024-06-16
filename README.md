@@ -12,7 +12,7 @@ Before you begin, ensure you have the following:
 
 ### Terraform Version
 
-```hcl
+```
 terraform {
   required_version = ">= 1.0.0"
 
@@ -23,5 +23,6 @@ terraform {
     }
   }
 }
+'''
 AWS Provider
 The AWS provider is configured with the region ap-south-1:
