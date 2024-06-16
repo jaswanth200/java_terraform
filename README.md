@@ -13,7 +13,7 @@ Before you begin, ensure you have the following:
 ### Terraform Version
 
 This configuration specifies Terraform version and required provider version constraints:
-'''
+'''hcl
 terraform {
   required_version = ">= 1.0.0"
 
