@@ -30,7 +30,7 @@ The AWS provider is configured with the region ap-south-1:
 provider "aws" {
   region = "ap-south-1"
 }
-
+'''hcl
 **Resources Created**
 VPC (aws_vpc.provpc)
 CIDR Block: 10.10.0.0/16
