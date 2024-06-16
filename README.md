@@ -45,18 +45,19 @@ provider "aws" {
 **Subnets**
 Three subnets created across different availability zones (ap-south-1a, ap-south-1b, ap-south-1c):
 
-1.Subnet 1 (aws_subnet.aval_1a_subnet):
+**1.Subnet 1 (aws_subnet.aval_1a_subnet):**
 
-CIDR Block: 10.10.1.0/24
-Availability Zone: ap-south-1a
-Tags: Name: aval_1a_subnet
-Subnet 2 (aws_subnet.aval_1b_subnet):
+* **CIDR Block:** 10.10.1.0/24
+* **Availability Zone:** ap-south-1a
+* **Tags:** Name: aval_1a_subnet
 
-CIDR Block: 10.10.2.0/24
-Availability Zone: ap-south-1b
-Tags: Name: aval_1b_subnet
-Subnet 3 (aws_subnet.aval_1c_subnet):
+**2.Subnet 2 (aws_subnet.aval_1b_subnet):**
+* **CIDR Block:**  10.10.2.0/24
+* **Availability Zone:** ap-south-1b
+* **Tags:** Name: aval_1b_subnet
+  
+**3Subnet 3 (aws_subnet.aval_1c_subnet):**
 
-CIDR Block: 10.10.3.0/24
-Availability Zone: ap-south-1c
-Tags: Name: aval_1c_subnet
+* **CIDR Block:** 10.10.3.0/24
+* **Availability Zone:** ap-south-1c
+* **Tags:** Name: aval_1c_subnet
