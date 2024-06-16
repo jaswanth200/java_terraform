@@ -295,3 +295,97 @@ We welcome contributions to improve this pipeline. Please follow these steps:
 2. **Create a New Branch**: Use a descriptive branch name, e.g., `feature/add-logging`.
 3. **Make Changes**: Implement your changes.
 4. **Submit a Pull Request**: Create a pull request to merge your changes into the main repository.
+
+
+# Jenkins Pipeline for Deploying Java Application to Remote VM
+
+This Jenkins pipeline automates the deployment of a Java application from a Nexus repository to a remote VM, setting up OpenJDK 11, and running the application.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Pipeline Stages](#pipeline-stages)
+- [Requirements](#requirements)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+## Overview
+
+This pipeline consists of three stages:
+1. **Getting tar file from Nexus**: Downloads a tar file containing the Java application from Nexus using SSH and curl.
+2. **Unarchive the tar file**: Unarchives the downloaded tar file on the remote VM, installs OpenJDK 11, and prepares the application.
+3. **Run the JAVA APPLICATION**: Runs the Java application with specified arguments on the remote VM.
+
+The pipeline assumes SSH access to the remote VM (`ubuntu@${remote_vm_ip_address}`) and credentials (`jashu:12345`) for Nexus repository access.
+
+## Pipeline Stages
+
+### Getting tar file from Nexus
+
+# Pipeline Description
+
+This pipeline is designed to deploy a Java application on a remote VM after fetching a tar file from a Nexus repository.
+
+## Pipeline Structure
+
+The pipeline consists of the following stages:
+
+### Stage 1: Getting tar file from Nexus
+
+This stage downloads a tar file containing the Java application from a Nexus repository using SSH and curl.
+
+### Stage 2: Unarchive the tar file
+
+This stage unarchives the downloaded tar file on the remote VM and prepares the environment by installing OpenJDK 11.
+
+### Stage 3: Run the Java application
+
+Finally, this stage executes the Java application on the remote VM with specified arguments.
+
+## Pipeline Script
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Getting tar file from Nexus') {
+            steps {
+                script {
+                    // Download the tar file from Nexus repository using SSH and curl
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'curl -u jashu:12345 -O -L http://nexus_ip_address:8081/repository/maven-repo/javatar.${img_tag}.tar'
+                    """
+                }
+            }
+        }
+
+        stage('Unarchive the tar file') {
+            steps {
+                script {
+                    // Unarchive the tar file on the remote VM
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'tar -xvf javatar.img_tag.tar && cd demo-backend1/target'
+                    """
+                    // Install OpenJDK 11 on the remote VM
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'sudo apt update && sudo apt install -y openjdk-11-jdk'
+                    """
+                }
+            }
+        }
+
+        stage('Run the JAVA APPLICATION') {
+            steps {
+                script {
+                    // Run the Java application with specified arguments
+                    sh """
+                        ssh ubuntu@${remote_vm_ip_address} 'cd demo-backend1/target && java -jar /home/ubuntu/demo-backend1/target/sentiment-analysis-web-0.0.2-SNAPSHOT.jar --sa.logic.api.url=http://localhost:5000'
+                    """
+                }
+            }
+        }
+    }
+}
+
