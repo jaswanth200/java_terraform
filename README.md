@@ -28,5 +28,5 @@ terraform {
   }
 }
 ```
-###AWS Provider
+### AWS Provider
 The AWS provider is configured with the region ap-south-1:
