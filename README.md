@@ -129,6 +129,101 @@ We welcome contributions to improve this pipeline. Please follow these steps:
 3. **Make Changes**: Implement your changes.
 4. **Submit a Pull Request**: Create a pull request to merge your changes into the main repository.
 
+# Terraform Deployment for AWS Infrastructure
+
+This Terraform script automates the deployment of an AWS infrastructure with a load balancer and auto-scaling group for a Java application.
+
+## Prerequisites
+
+Before running this Terraform script, ensure:
+
+- Terraform CLI is installed (`>= 1.0.0` recommended).
+- AWS credentials are configured either through environment variables or shared credentials file.
+- Necessary permissions are granted for creating resources like VPC, subnets, security groups, load balancer, and auto-scaling groups.
+
+## Terraform Configuration
+
+### Providers
+
+This script utilizes the following Terraform provider:
+
+- **AWS Provider**: Configured to deploy resources in the `ap-south-1` region.
+
+### Data Sources
+
+This script uses a Terraform `terraform_remote_state` data source to retrieve outputs from a previously deployed infrastructure configuration:
+
+- **Networking**: Retrieves VPC ID, subnets, security groups, and AMI information from the specified Terraform state file (`/var/lib/jenkins/workspace/Java_Terraform_VM_Create/file1/terraform.tfstate`).
+
+### Resources
+
+#### Load Balancer Security Group
+
+Creates a security group (`aws_security_group.lbsg`) for the load balancer allowing HTTP traffic:
+
+- Allows incoming HTTP traffic (`TCP port 80`) from the internet (`0.0.0.0/0`).
+- Allows outgoing HTTP traffic to the internet.
+
+#### Load Balancer
+
+Creates an AWS Application Load Balancer (`aws_lb.prolb`):
+
+- Configured with the security group (`aws_security_group.lbsg`).
+- Spread across specified subnets (`data.terraform_remote_state.networking.outputs.aval_1a_subnet`, `aval_1b_subnet`, `aval_1c_subnet`).
+- Tagged with `Environment: production`.
+
+#### Load Balancer Listener
+
+Creates a listener (`aws_lb_listener.prolb_listener`) for the load balancer:
+
+- Listens on port `80` for HTTP traffic.
+- Forwards traffic to the target group (`aws_lb_target_group.prolb_targetgroup`).
+
+#### Target Group
+
+Defines a target group (`aws_lb_target_group.prolb_targetgroup`) for the load balancer:
+
+- Listens on port `80` for HTTP traffic.
+- Associated with the VPC (`data.terraform_remote_state.networking.outputs.provpc`).
+
+#### Auto Scaling
+
+Creates an auto-scaling group (`aws_autoscaling_group.prod_auto_scale_grp`) with a launch configuration (`aws_launch_configuration.pro_aws_asg_config`):
+
+- Launches instances with the specified AMI (`data.terraform_remote_state.networking.outputs.java_first_instance_ami`), instance type (`t2.micro`), key pair (`hhkey`), and security groups.
+- Configured to operate between `1` and `5` instances (`var.asgmin`, `asgmax`), with `1` desired.
+- Utilizes the load balancer (`aws_lb.prolb`) for health checks.
+- Spans across specified subnets (`aval_1a_subnet`, `aval_1b_subnet`, `aval_1c_subnet`).
+- Defines instance maintenance policies for health monitoring.
+- Tags instances with `vv: bar` upon launch.
+
+### Variables
+
+This script defines the following variables:
+
+- **asgmin**: Minimum number of instances in the auto-scaling group (default: `1`).
+- **asgmax**: Maximum number of instances in the auto-scaling group (default: `5`).
+- **asgdesired**: Desired number of instances in the auto-scaling group (default: `1`).
+
+## Usage
+
+1. **Configure Terraform Backend**: Ensure proper configuration of the Terraform backend to store state files securely.
+   
+2. **Set AWS Credentials**: Ensure AWS credentials are set up correctly to allow Terraform to authenticate and deploy resources.
+   
+3. **Customize Variables**: Modify variables (`asgmin`, `asgmax`, `asgdesired`) as per your scaling requirements and environment setup.
+   
+4. **Execute Terraform Commands**: Run `terraform init` to initialize the working directory and then `terraform apply` to apply the changes and deploy the infrastructure.
+
+## Notes
+
+- Ensure proper network connectivity and security group configurations to allow traffic to flow correctly between components.
+- Monitor AWS costs associated with running instances, load balancer usage, and other AWS resources created by this script.
+
+This README.md file provides an overview of the Terraform script for deploying an AWS infrastructure with a load balancer and auto-scaling group. Customize it according to your specific project's requirements and configurations.
+
+
+
 # Jenkins Pipeline for Deploying Java Application
 
 This Jenkins pipeline script automates the deployment of a Java application to a remote VM. It performs the following steps:
