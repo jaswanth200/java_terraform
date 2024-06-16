@@ -23,7 +23,8 @@ terraform {
       version = "~> 5.46.0"
     }
   }
-}'''
+}
+'''
 The AWS provider is configured with the region ap-south-1:
 provider "aws" {
   region = "ap-south-1"
