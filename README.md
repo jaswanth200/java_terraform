@@ -56,7 +56,7 @@ Three subnets created across different availability zones (ap-south-1a, ap-south
 * **Availability Zone:** ap-south-1b
 * **Tags:** Name: aval_1b_subnet
   
-**3Subnet 3 (aws_subnet.aval_1c_subnet):**
+**3.Subnet 3 (aws_subnet.aval_1c_subnet):**
 
 * **CIDR Block:** 10.10.3.0/24
 * **Availability Zone:** ap-south-1c
