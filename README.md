@@ -14,7 +14,7 @@ Before you begin, ensure you have the following installed/configured:
 
 1. Clone this repository:
 
-   ```bash
+   ```
    git clone <repository-url>
    cd <repository-name>
    '''
