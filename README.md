@@ -31,3 +31,10 @@ provider "aws" {
   region = "ap-south-1"
 }
 
+Resources Created
+VPC (aws_vpc.provpc)
+CIDR Block: 10.10.0.0/16
+Tags: Name: provpc
+Internet Gateway (aws_internet_gateway.proig)
+Attached to VPC: aws_vpc.provpc
+Tags: Name: proig
