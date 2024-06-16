@@ -17,4 +17,4 @@ Before you begin, ensure you have the following installed/configured:
    ```
    git clone <repository-url>
    cd <repository-name>
-   '''
+   ```
