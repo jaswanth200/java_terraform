@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                dir('file1') {
+                dir('file2') {
                     script {
                         sh 'terraform init -upgrade'
                     }
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('file1') {
+                dir('file2') {
                     script {
                         sh 'terraform apply -auto-approve'
                     }
