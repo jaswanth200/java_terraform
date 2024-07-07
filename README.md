@@ -42,3 +42,12 @@ Setup Instructions
 ```
 cd file1
 ```
+# <h3>2. Initialize Terraform:</h3>
+```
+terraform init -upgrade
+```
+# <h3>3. Apply the Terraform configuration:</h3>
+```
+terraform apply -auto-approve
+```
+# <h3>Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
