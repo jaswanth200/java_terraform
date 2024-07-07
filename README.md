@@ -53,7 +53,7 @@ terraform apply -auto-approve
 **<h3>4.** Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
 
 # <h2>Jenkins Setup</h2>
-**1.** Create a Jenkins job for each pipeline using Jenkinsfile1 and Jenkinsfile2.
+**1.** Create a Jenkins job for each pipeline using Jenkinsfile1 and Jenkinsfile2.<br>
 **2.** Configure the job:
 * For Jenkinsfile1, ensure it points to the correct Terraform directory (file1).
 * For Jenkinsfile2, replace placeholders (${remote_vm_ip_address}, ${nexus_ip_address}, ${img_tag}) with actual values.
