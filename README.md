@@ -60,3 +60,6 @@ terraform apply -auto-approve
 **3.** Run the Jenkins jobs sequentially:
 * Start with the job using Jenkinsfile1 to provision AWS resources.
 * Then run the job using Jenkinsfile2 to deploy the Java application.
+
+Terraform Commands
+==================
