@@ -11,9 +11,6 @@ This project provisions an AWS infrastructure using Terraform and deploys a Java
 * [Jenkins Pipeline](#jenkins-pipeline)
 * [Outputs](#outputs)
 
-## Project Structure
-
-
 Project Structure
 =================
 ```
