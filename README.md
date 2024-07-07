@@ -162,3 +162,35 @@ terraform apply -auto-approve
 **2.** Configure the job:<br>
 **3.** Ensure it points to the correct Terraform directory (file2).<br>
 **4.** Run the Jenkins job to provision the load balancer and auto-scaling group on AWS.
+
+Terraform Commands
+==================
+* Initialize Terraform:
+```
+terraform init -upgrade
+```
+* Validate the configuration:
+```
+terraform validate
+```
+* Apply the configuration:
+```
+terraform apply -auto-approve
+```
+* Destroy the infrastructure:
+```
+terraform destroy -auto-approve
+```
+
+# Jenkins Pipeline
+The Jenkins pipeline in file2 (Jenkinsfile) performs the following stages:<br>
+
+**1.** <b>Terraform Init:</b> Initializes the Terraform configuration.
+**2.** <b>Terraform Apply:</b> Applies the Terraform configuration to provision the load balancer and auto-scaling group.
+
+# Variables
+The following variables are defined in file2/variables.tf:<br>
+
+* <b>asgmin:</b> Minimum size of the auto-scaling group (default: 1).
+* <b>asgmax:</b> Maximum size of the auto-scaling group (default: 5).
+* <b>asgdesired:</b> Desired capacity of the auto-scaling group (default: 1).
