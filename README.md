@@ -185,7 +185,7 @@ terraform destroy -auto-approve
 # Jenkins Pipeline
 The Jenkins pipeline in file2 (Jenkinsfile) performs the following stages:<br>
 
-**1.** <b>Terraform Init:</b> Initializes the Terraform configuration.
+**1.** <b>Terraform Init:</b> Initializes the Terraform configuration.<br>
 **2.** <b>Terraform Apply:</b> Applies the Terraform configuration to provision the load balancer and auto-scaling group.
 
 # Variables
