@@ -149,4 +149,11 @@ This project extends the AWS infrastructure setup by adding an Application Load 
 2. **Navigate to the Terraform directory:**
    ```sh
    cd file2
-
+* Initialize Terraform:
+```
+terraform init -upgrade
+```
+* Apply the configuration:
+```
+terraform apply -auto-approve
+```
