@@ -50,7 +50,7 @@ terraform init -upgrade
 ```
 terraform apply -auto-approve
 ```
-# <h3>4. Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
+**<h3>4.** Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
 
 # <h4>Jenkins Setup</h4>
 **1.** Create a Jenkins job for each pipeline using Jenkinsfile1 and Jenkinsfile2.
