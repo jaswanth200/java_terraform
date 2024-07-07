@@ -82,10 +82,10 @@ terraform destroy -auto-approve
 
 Jenkins Pipeline
 ================
-<b><h3>Jenkinsfile1</h3>
+<b><h3>Jenkinsfile1</h3></b>
 This pipeline performs the following stages:
-**1.** Terraform Init: Initializes the Terraform configuration.
-**2.** Terraform Apply: Applies the Terraform configuration to provision AWS resources.
+**1.** <b>Terraform Init:</b> Initializes the Terraform configuration.
+**2.** <b>Terraform Apply:</b> Applies the Terraform configuration to provision AWS resources.
 <b><h3>Jenkinsfile2</h3>
 This pipeline performs the following stages:
 **1.** <b>Getting tar file from Nexus:</b> Downloads a tar file from the Nexus repository.
