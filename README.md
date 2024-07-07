@@ -38,7 +38,7 @@ Setup Instructions
 ==================
 # <h3>AWS Setup with Terraform</h3>
 
-# 1. Navigate to the Terraform directory:
+# <h3>1. Navigate to the Terraform directory:</h3>
 ```
 cd file1
 ```
