@@ -36,7 +36,7 @@ Project Structure
   
 Setup Instructions
 ==================
-# AWS Setup with Terraform
+# <h3>AWS Setup with Terraform</h3>
 
 # 1. Navigate to the Terraform directory:
 ```
