@@ -104,3 +104,49 @@ After applying the Terraform configuration, the following outputs will be availa
 * <b>aval_1b_subnet:</b> Subnet ID for availability zone ap-south-1b.
 * <b>aval_1c_subnet:</b> Subnet ID for availability zone ap-south-1c.
 * <b>prosg:</b> Security Group ID.
+
+
+# AWS Autoscaling and Load Balancing with Terraform
+
+This project extends the AWS infrastructure setup by adding an Application Load Balancer (ALB) and an Auto Scaling Group (ASG) to the existing VPC created in the previous Terraform configuration. The Jenkins pipeline is used to automate the provisioning process.
+
+## Table of Contents
+
+* [Project Structure](#project-structure)
+* [Prerequisites](#prerequisites)
+* [Setup Instructions](#setup-instructions)
+* [Terraform Commands](#terraform-commands)
+* [Jenkins Pipeline](#jenkins-pipeline)
+* [Variables](#variables)
+* [Outputs](#outputs)
+
+## Project Structure
+```
+├── file2/
+│ ├── main.tf
+│ ├── variables.tf
+├── Jenkinsfile
+```
+
+* **file2/main.tf**: Contains the Terraform configuration for load balancer, auto-scaling, and security groups.
+* **file2/variables.tf**: Defines variables used in the Terraform configuration.
+* **Jenkinsfile**: Jenkins pipeline for initializing and applying the Terraform configuration.
+
+## Prerequisites
+
+* Terraform (>= 1.0.0)
+* AWS account with necessary IAM permissions
+* Jenkins
+* Existing VPC and networking setup from `file1`
+
+## Setup Instructions
+
+### AWS Setup with Terraform
+
+1. **Ensure you have the Terraform state file from the previous configuration (`file1`):**
+   - It should be located at `/var/lib/jenkins/workspace/Java_Terraform_VM_Create/file1/terraform.tfstate`.
+
+2. **Navigate to the Terraform directory:**
+   ```sh
+   cd file2
+
