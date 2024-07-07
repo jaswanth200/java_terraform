@@ -54,4 +54,7 @@ terraform apply -auto-approve
 
 # <h4>Jenkins Setup</h4>
 **1.** Create a Jenkins job for each pipeline using Jenkinsfile1 and Jenkinsfile2.
+**2.** Configure the job:
+* For Jenkinsfile1, ensure it points to the correct Terraform directory (file1).
+* For Jenkinsfile2, replace placeholders (${remote_vm_ip_address}, ${nexus_ip_address}, ${img_tag}) with actual values.
 
