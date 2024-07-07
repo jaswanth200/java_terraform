@@ -83,3 +83,24 @@ terraform destroy -auto-approve
 Jenkins Pipeline
 ================
 <b><h3>Jenkinsfile1</h3>
+This pipeline performs the following stages:
+**1.** Terraform Init: Initializes the Terraform configuration.
+**2.** Terraform Apply: Applies the Terraform configuration to provision AWS resources.
+<b><h3>Jenkinsfile2</h3>
+This pipeline performs the following stages:
+**1.** <b>Getting tar file from Nexus:</b> Downloads a tar file from the Nexus repository.
+**2.** <b>Unarchive the tar file:</b> Unarchives the tar file on the remote VM.
+**3.** <b>Run the JAVA APPLICATION:</b> Runs the Java application using the specified JAR file.
+
+Outputs
+=======
+After applying the Terraform configuration, the following outputs will be available:
+
+* <b>java_first_instance_ami:</b> AMI ID of the Java application instance.
+* <b>java_first_instance_ip:</b> Public IP of the Java application instance.
+* <b>provpc:</b> VPC ID.
+* <b>proig:</b> Internet Gateway ID.
+* <b>aval_1a_subnet:</b> Subnet ID for availability zone ap-south-1a.
+* <b>aval_1b_subnet:</b> Subnet ID for availability zone ap-south-1b.
+* <b>aval_1c_subnet:</b> Subnet ID for availability zone ap-south-1c.
+* <b>prosg:</b> Security Group ID.
