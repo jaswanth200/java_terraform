@@ -50,4 +50,4 @@ terraform init -upgrade
 ```
 terraform apply -auto-approve
 ```
-# <h3>Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
+# <h3>4. Note: Ensure the hhkey SSH key pair exists in your AWS account or modify the main.tf file to use an existing key.</h3>
