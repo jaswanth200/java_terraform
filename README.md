@@ -57,4 +57,6 @@ terraform apply -auto-approve
 **2.** Configure the job:
 * For Jenkinsfile1, ensure it points to the correct Terraform directory (file1).
 * For Jenkinsfile2, replace placeholders (${remote_vm_ip_address}, ${nexus_ip_address}, ${img_tag}) with actual values.
-
+**3.** Run the Jenkins jobs sequentially:
+* Start with the job using Jenkinsfile1 to provision AWS resources.
+* Then run the job using Jenkinsfile2 to deploy the Java application.
