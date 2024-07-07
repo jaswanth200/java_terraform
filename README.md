@@ -87,9 +87,9 @@ This pipeline performs the following stages:<br>
 **1.** <b>Terraform Init:</b> Initializes the Terraform configuration.<br>
 **2.** <b>Terraform Apply:</b> Applies the Terraform configuration to provision AWS resources.
 <b><h3>Jenkinsfile2</h3>
-This pipeline performs the following stages:
-**1.** <b>Getting tar file from Nexus:</b> Downloads a tar file from the Nexus repository.
-**2.** <b>Unarchive the tar file:</b> Unarchives the tar file on the remote VM.
+This pipeline performs the following stages:<br>
+**1.** <b>Getting tar file from Nexus:</b> Downloads a tar file from the Nexus repository.<br>
+**2.** <b>Unarchive the tar file:</b> Unarchives the tar file on the remote VM.<br>
 **3.** <b>Run the JAVA APPLICATION:</b> Runs the Java application using the specified JAR file.
 
 Outputs
