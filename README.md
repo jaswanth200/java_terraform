@@ -67,3 +67,19 @@ Terraform Commands
 ```
 terraform init -upgrade
 ```
+* Validate the configuration:
+```
+terraform validate
+```
+* Apply the configuration:
+```
+terraform apply -auto-approve
+```
+* Destroy the infrastructure:
+```
+terraform destroy -auto-approve
+```
+
+Jenkins Pipeline
+================
+<b><h3>Jenkinsfile1</h3>
