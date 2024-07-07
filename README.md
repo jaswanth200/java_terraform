@@ -194,3 +194,8 @@ The following variables are defined in file2/variables.tf:<br>
 * <b>asgmin:</b> Minimum size of the auto-scaling group (default: 1).
 * <b>asgmax:</b> Maximum size of the auto-scaling group (default: 5).
 * <b>asgdesired:</b> Desired capacity of the auto-scaling group (default: 1).
+
+# Outputs
+This Terraform configuration does not explicitly define outputs, but it relies on outputs from the previous configuration <b>(file1)</b> to get VPC, subnets, and security group details.
+
+<b>Important:</b> Ensure that the Terraform state file from <b>file1</b> is correctly referenced in the <b>data "terraform_remote_state" "networking"</b> block in <b>file2/main.tf</b> for accurate resource data.
