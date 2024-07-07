@@ -63,3 +63,7 @@ terraform apply -auto-approve
 
 Terraform Commands
 ==================
+* Initialize Terraform:
+```
+terraform init -upgrade
+```
