@@ -158,7 +158,7 @@ terraform init -upgrade
 terraform apply -auto-approve
 ```
 # Jenkins Setup
-**1.** Create a Jenkins job using the Jenkinsfile located in file2/.
-**2.** Configure the job:
-**3.** Ensure it points to the correct Terraform directory (file2).
+**1.** Create a Jenkins job using the Jenkinsfile located in file2/.<br>
+**2.** Configure the job:<br>
+**3.** Ensure it points to the correct Terraform directory (file2).<br>
 **4.** Run the Jenkins job to provision the load balancer and auto-scaling group on AWS.
